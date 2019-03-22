@@ -1,15 +1,19 @@
 package application;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Model {
 
-    private String calculatorDisplay;
+    private ArrayList<String> expression;
     private Map<String,Integer> numbers;
+
     public Model(){
-        calculatorDisplay = "0";
+        expression = new ArrayList<>();
+        expression.add("0");
         numbers = new HashMap<>(){{
             put("0",0);
             put("1",1);
@@ -25,34 +29,43 @@ public class Model {
 
     }
 
-    public void setCalculatorDisplay(String newElement){
-        if(calculatorDisplay == "0")
-            calculatorDisplay = newElement;
-        else
-            calculatorDisplay += newElement;
+    public void setCalculatorDisplay(String digit){
+        expression.add(digit);
+        //if is zero, just add it once, the user can't add more than one zero as a first digit
+        //if is not a zero thus is a digit, add the digit
+        //if is an operand, check which operand it is and do the right operation
+        //display then the result on the screen
     }
 
     public String getCalculatorDisplay(){
-        return calculatorDisplay;
+        Function<ArrayList<String>,String> printElementsToDisplay = (list) -> {
+            Iterator<String> listIterator = list.iterator();
+            String expression = "";
+            while(listIterator.hasNext()){
+                expression += listIterator.next();
+            }
+            return expression;
+        };
+        return printElementsToDisplay.apply(expression);
     }
 
-    public void evaluate(){
+    private void evaluate(){
         System.out.println("EVALUATE EXPRESSION");
     }
 
-    public int add(int a, int b){
+    private int add(int a, int b){
         return a+b;
     }
 
-    public int sub(int a, int b){
+    private int sub(int a, int b){
         return a-b;
     }
 
-    public int mult(int a, int b){
+    private int mult(int a, int b){
         return a*b;
     }
 
-    public  int div(int a, int b){
+    private  int div(int a, int b){
         if (b > 0)
             return a/b;
         else
