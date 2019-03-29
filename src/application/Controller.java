@@ -32,20 +32,45 @@ public class Controller {
     void pressedAnimation(MouseEvent event) {
         Button currentButton = (Button) event.getSource();
         pressedAnimation(currentButton);
-        if (currentButton.getText().equals("=")){
-            resultLabel.setText(new Model(accumulator,expression,operator).evaluateExpression());
-            expression = "";
-            accumulator = "";
-            operator = null;
-        }else if(operation.containsKey(currentButton.getText())){
-            operator = operation.get(currentButton.getText());
-            accumulator = expression;
-            expression = "";
-            resultLabel.setText("0");
-        }else {
-            expression += currentButton.getText();
-            resultLabel.setText(expression);
+        composeAcorrectExpression(currentButton.getText());
+    }
+
+    private void composeAcorrectExpression(String digit){
+        if (operation.containsKey(digit)){
+            addAnOperation(digit);
+        }else if(digit.equals("=")){
+            evaluateExpression();
+        }else if(digit.equals("C")){
+            eraseExpression();
+        }else{
+            addAdigit(digit);
         }
+    }
+
+    private void addAnOperation(String digit){
+        operator = operation.get(digit);
+        accumulator = expression;
+        expression = "";
+        resultLabel.setText("0");
+    }
+
+    private void evaluateExpression(){
+        resultLabel.setText(new Model(accumulator,expression,operator).evaluateExpression());
+        expression = "";
+        accumulator = "";
+        operator = null;
+    }
+
+    private void eraseExpression(){
+        resultLabel.setText("0");
+        accumulator = "";
+        expression = "";
+        operator = null;
+    }
+
+    private void addAdigit(String digit){
+        expression += digit;
+        resultLabel.setText(expression);
     }
 
     @FXML
