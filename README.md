@@ -7,6 +7,6 @@ Simple Calculator project, implemented using lambda expression and trying to fol
   2. Basic GUI elements from javafx library such as Labels, Buttons, ListView
   3. Basic handling events in java
   4. How to use the Scene Builder
-  5. # Basic Lambda expression
-  6. # Functional paradigm in Java
+  5. Basic Lambda expression
+  6. Functional paradigm in Java
   7. MVC pattern
